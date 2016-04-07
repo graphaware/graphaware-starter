@@ -16,7 +16,7 @@ clone this repository and make sure you can build it using Maven `mvn clean pack
 Then explore the code and replace it with your own. The code is a simple "Friendship Strength Counter" which
 
 * tracks the sum of all friendship strengths in the graph using a dedicated node and a Transaction-Driven Framework Module
-* exposes is using an API build using the Framework
+* exposes is using a REST API built using the Framework
 
 ### Deploy & Run
 
