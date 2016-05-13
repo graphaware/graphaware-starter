@@ -29,11 +29,9 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.helpers.collection.Iterables;
+import org.neo4j.helpers.collection.Iterators;
 
 import java.util.Collections;
-
-import static org.neo4j.tooling.GlobalGraphOperations.at;
 
 /**
  * {@link com.graphaware.runtime.module.TxDrivenModule} that counts the total friendship strength in the database
@@ -75,7 +73,7 @@ public class FriendshipStrengthModule extends BaseTxDrivenModule<Void> {
     @Override
     public void initialize(GraphDatabaseService database) {
         try (Transaction tx = database.beginTx()) {
-            for (Node counter : Iterables.asResourceIterable(database.findNodes(Labels.FriendshipCounter))) {
+            for (Node counter : Iterators.asResourceIterable(database.findNodes(Labels.FriendshipCounter))) {
                 counter.delete();
             }
             tx.success();
@@ -86,7 +84,7 @@ public class FriendshipStrengthModule extends BaseTxDrivenModule<Void> {
                 new TransactionalInput<>(database, 10000, new TransactionCallback<Iterable<Relationship>>() {
                     @Override
                     public Iterable<Relationship> doInTransaction(GraphDatabaseService database) throws Exception {
-                        return at(database).getAllRelationships();
+                        return database.getAllRelationships();
                     }
                 }),
                 new UnitOfWork<Relationship>() {

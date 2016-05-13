@@ -20,10 +20,14 @@ import com.graphaware.starter.module.FriendshipStrengthCounter;
 import com.graphaware.starter.module.FriendshipStrengthModule;
 import com.graphaware.runtime.GraphAwareRuntime;
 import com.graphaware.runtime.GraphAwareRuntimeFactory;
-import com.graphaware.test.integration.DatabaseIntegrationTest;
+import com.graphaware.test.integration.EmbeddedDatabaseIntegrationTest;
+import com.graphaware.test.integration.GraphAwareIntegrationTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.neo4j.graphdb.*;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,12 +35,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test for {@link FriendshipStrengthCounter}.
  */
-public class FriendshipStrengthModuleEmbeddedProgrammaticIntegrationTest extends DatabaseIntegrationTest {
+public class FriendshipStrengthModuleEmbeddedProgrammaticIntegrationTest extends EmbeddedDatabaseIntegrationTest {
 
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-
+    private void registerRuntime() {
         GraphAwareRuntime runtime = GraphAwareRuntimeFactory.createRuntime(getDatabase());
         runtime.registerModule(new FriendshipStrengthModule("FSM", getDatabase()));
         runtime.start();
@@ -44,6 +45,7 @@ public class FriendshipStrengthModuleEmbeddedProgrammaticIntegrationTest extends
 
     @Test
     public void totalFriendshipStrengthOnEmptyDatabaseShouldBeZero() {
+        registerRuntime();
         try (Transaction tx = getDatabase().beginTx()) {
             assertEquals(0, new FriendshipStrengthCounter(getDatabase()).getTotalFriendshipStrength());
             tx.success();
@@ -52,6 +54,7 @@ public class FriendshipStrengthModuleEmbeddedProgrammaticIntegrationTest extends
 
     @Test
     public void totalFriendshipStrengthShouldBeCorrectlyCalculated() {
+        registerRuntime();
         getDatabase().execute("CREATE " +
                 "(p1:Person)-[:FRIEND_OF {strength:2}]->(p2:Person)," +
                 "(p1)-[:FRIEND_OF {strength:1}]->(p3:Person)");
@@ -64,12 +67,13 @@ public class FriendshipStrengthModuleEmbeddedProgrammaticIntegrationTest extends
 
     @Test
     public void totalFriendshipStrengthShouldBeCorrectlyCalculated2() {
+        registerRuntime();
         try (Transaction tx = getDatabase().beginTx()) {
-            Node p1 = getDatabase().createNode(DynamicLabel.label("Person"));
-            Node p2 = getDatabase().createNode(DynamicLabel.label("Person"));
-            Node p3 = getDatabase().createNode(DynamicLabel.label("Person"));
-            p1.createRelationshipTo(p2, DynamicRelationshipType.withName("FRIEND_OF")).setProperty("strength", 1L);
-            p1.createRelationshipTo(p3, DynamicRelationshipType.withName("FRIEND_OF")).setProperty("strength", 2L);
+            Node p1 = getDatabase().createNode(Label.label("Person"));
+            Node p2 = getDatabase().createNode(Label.label("Person"));
+            Node p3 = getDatabase().createNode(Label.label("Person"));
+            p1.createRelationshipTo(p2, RelationshipType.withName("FRIEND_OF")).setProperty("strength", 1L);
+            p1.createRelationshipTo(p3, RelationshipType.withName("FRIEND_OF")).setProperty("strength", 2L);
             tx.success();
         }
 
