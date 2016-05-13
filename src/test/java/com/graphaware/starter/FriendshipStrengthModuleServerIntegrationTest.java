@@ -34,7 +34,7 @@ public class FriendshipStrengthModuleServerIntegrationTest extends GraphAwareInt
      */
     @Override
     protected String configFile() {
-        return "neo4j-friendship.properties";
+        return "neo4j-friendship.conf";
     }
 
     @Test
