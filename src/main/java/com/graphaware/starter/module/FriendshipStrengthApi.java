@@ -16,8 +16,10 @@
 
 package com.graphaware.starter.module;
 
+import com.graphaware.common.log.LoggerFactory;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/friendship/strength")
 public class FriendshipStrengthApi {
 
+    private static final Log LOG = LoggerFactory.getLogger(FriendshipStrengthApi.class);
+
     private final GraphDatabaseService database;
     private final FriendshipStrengthCounter counter;
 
@@ -43,6 +47,8 @@ public class FriendshipStrengthApi {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public long getTotalFriendshipStrength() {
+        LOG.info("This is how you log - computing total friendship strength");
+
         long totalFriendshipStrength;
 
         try (Transaction tx = database.beginTx()) {
