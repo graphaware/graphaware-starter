@@ -20,9 +20,6 @@ import com.graphaware.starter.module.FriendshipStrengthCounter;
 import com.graphaware.test.integration.EmbeddedDatabaseIntegrationTest;
 import org.junit.Test;
 import org.neo4j.graphdb.Transaction;
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,11 +31,7 @@ public class FriendshipStrengthModuleEmbeddedDeclarativeIntegrationTest extends 
 
     @Override
     protected String configFile() {
-        try {
-            return new ClassPathResource("neo4j-friendship.conf").getFile().getAbsolutePath();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return "neo4j-friendship.conf";
     }
 
     @Test
