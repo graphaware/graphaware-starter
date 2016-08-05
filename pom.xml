@@ -20,13 +20,13 @@
 
     <groupId>com.graphaware.neo4j.starter</groupId>
     <artifactId>graphaware-starter</artifactId>
-    <version>3.0.3.39</version>
+    <version>3.0.4.43</version>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>com.graphaware.neo4j</groupId>
         <artifactId>module-parent</artifactId>
-        <version>3.0.3.39</version>
+        <version>3.0.4.43</version>
     </parent>
 
     <name>GraphAware Starter</name>
