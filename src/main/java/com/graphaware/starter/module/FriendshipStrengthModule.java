@@ -16,7 +16,7 @@
 
 package com.graphaware.starter.module;
 
-import com.graphaware.common.policy.RelationshipInclusionPolicy;
+import com.graphaware.common.policy.inclusion.RelationshipInclusionPolicy;
 import com.graphaware.runtime.config.FluentTxDrivenModuleConfiguration;
 import com.graphaware.runtime.config.TxDrivenModuleConfiguration;
 import com.graphaware.runtime.module.BaseTxDrivenModule;
