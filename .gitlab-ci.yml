@@ -13,6 +13,8 @@ bumpVersion:
     - mvn versions:set -DnewVersion=$PARENT_VERSION $MAVEN_CLI_OPTS
     - mvn versions:commit $MAVEN_CLI_OPTS
     - git commit -a -m "Gitlab-ci parent version bump"
+  artifacts:
+    paths: []
   only:
     refs:
       - CICD
