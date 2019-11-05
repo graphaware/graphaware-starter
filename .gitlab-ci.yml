@@ -4,8 +4,17 @@ include:
 
 stages:
   - deploy
-  - postDeploy
 
 bumpVersion:
   extends: .frameworkVersionBump
   stage: deploy
+  script:
+    - mvn versions:update-parent $MAVEN_CLI_OPTS -DparentVersion=["$PARENT_VERSION"]
+    - mvn version:set -DnewVersion=$PARENT_VERSION $MAVEN_CLI_OPTS
+    - mvn versions:commit $MAVEN_CLI_OPTS
+    - git commit -a -m "Gitlab-ci parent version bump"
+  only:
+    refs:
+      - CICD
+    variables:
+      - $PARENT_VERSION
