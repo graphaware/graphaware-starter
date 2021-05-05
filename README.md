@@ -3,8 +3,6 @@
 GraphAware Starter
 ==================
 
-[![Build Status](https://travis-ci.org/graphaware/graphaware-starter.png)](https://travis-ci.org/graphaware/graphaware-starter)
-
 This repository will get you started quickly with the [GraphAware Framework](https://github.com/graphaware/neo4j-framework).
 
 ### Build
